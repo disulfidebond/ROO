@@ -1,0 +1,6 @@
+###
+inputFile=fastaFile.fasta
+###
+commandFormat=qsubSSH
+###
+n_ct=1,queueName=single,wallTime=72:00:00,allocationName=myAllocation
