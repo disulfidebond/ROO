@@ -1,0 +1,13 @@
+###
+inputFile= # name of input file OR inputFile=NONE
+###
+commandFormat= # can be one of: 'clusterSSH, qsubSSH, clusterLSF, single-node-SSH'
+###
+# clusterSSH:
+node='',n_ct='',nodeNM=''
+# qsubSSH:
+n_ct='',allocationName='',wallTime='',queueName=''
+# clusterLSF
+n_ct='',queueName='',jobName='',projectName='',wallTime=''
+# single-node-SSH
+n_ct=''
