@@ -41,3 +41,48 @@ FILE2 is an input file to run the command entered, if it is required.
 
 python roo.py -a start -f [exampleCommandFile.txt](https://github.com/disulfidebond/ROO/blob/master/commandFileTemplateExample.txt) -i fastaFile.fasta
 
+
+### Setup and Detailed Explanation
+
+The following files must be modified prior to use for all jobs:
+
+[job_task.txt](https://github.com/disulfidebond/ROO/blob/master/job_task.txt)
+[copy_phone_directory.sh](https://github.com/disulfidebond/ROO/blob/master/copy_phone_directory.sh)
+
+The following files must be modified depending on the type of job:
+
+qsubSSH:
+
+[getjobNumber_qsubSSH.sh](https://github.com/disulfidebond/ROO/blob/master/getjobnumber_qsubSSH.sh)
+[make_phone_call_qsubSSH](https://github.com/disulfidebond/ROO/blob/master/make_phone_call_qsubSSH.sh) 
+
+clusterSSH:
+
+[phonecall.txt](https://github.com/disulfidebond/ROO/blob/master/phone_call.txt)
+[make_phone_call_clusterSSH.sh](https://github.com/disulfidebond/ROO/blob/master/make_phone_call_clusterSSH.sh)
+
+###### When a job is started using clusterSSH:
+    
+    1) jobdata is sourced to add any necessary variables to the environment
+    2) The job number is created from a number provided in 'n_ct', and incremented for each subsequent task in the input file
+    3) The file 'longdistancecall' is created, which is the file that will start the analysis inside the cluster, and modifies the 'phonecall' file to have the appropriate variables.
+    4) next, a text file is created with a hash string and the job number to uniquely identify the job
+    5) copy_phone_directory copies the above contents to the destination that was specified
+    6) make_phone_call does the following:
+       a) make_phone_call uses SSH to launch the longdistancecall file on the destination
+       b) longdistancecall has an SSH command to start the phonecall command, usually on a specified worker node
+       c) phonecall runs the specified commands, 
+       d) phonecall either stops and waits, or reads the file returnphonecall for the origin SSH information and uses scp to copy the results back to the origin
+
+###### When a job is started using qsubSSH:
+
+     1) jobdata is sourced to add any necessary variables to the environment
+     2) The job number is created from a number provided in 'n_ct', and incremented for each subsequent task in the input file
+     3) The file phonecall is created (NOTE this is different than clusterSSH).  The phonecall file will create a pbs file at the destination with all of the required values to submit the job to qsub
+     4) next, a text file is created with a hash string and the job number to uniquely identify the job
+     5) copy_phone_directory copies the above contents to the destination that was specified
+     6) make_phone_call does the following:
+       a) make_phone_call uses SSH to launch phonecall on the destination
+       b) phonecall creates the pbs file, submits the job, and collects the job number in a log file
+       c) getjobNumber_qsubSSH retrieves the job number from the destination so the job can be checked later
+       d) when the job is completed, it is retrieved
