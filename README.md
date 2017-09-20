@@ -47,6 +47,7 @@ python roo.py -a start -f [exampleCommandFile.txt](https://github.com/disulfideb
 The following files must be modified prior to use for all jobs:
 
 [job_task.txt](https://github.com/disulfidebond/ROO/blob/master/job_task.txt)
+
 [copy_phone_directory.sh](https://github.com/disulfidebond/ROO/blob/master/copy_phone_directory.sh)
 
 The following files must be modified depending on the type of job:
@@ -54,11 +55,13 @@ The following files must be modified depending on the type of job:
 qsubSSH:
 
 [getjobNumber_qsubSSH.sh](https://github.com/disulfidebond/ROO/blob/master/getjobnumber_qsubSSH.sh)
+
 [make_phone_call_qsubSSH](https://github.com/disulfidebond/ROO/blob/master/make_phone_call_qsubSSH.sh) 
 
 clusterSSH:
 
 [phonecall.txt](https://github.com/disulfidebond/ROO/blob/master/phone_call.txt)
+
 [make_phone_call_clusterSSH.sh](https://github.com/disulfidebond/ROO/blob/master/make_phone_call_clusterSSH.sh)
 
 ###### When a job is started using clusterSSH:
