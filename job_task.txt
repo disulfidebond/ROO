@@ -1,0 +1,2 @@
+export P1PATH="/some/path/" # add any additional PATHS on the **ORIGIN** 
+export "PATH=$PATH:$P1PATH"
